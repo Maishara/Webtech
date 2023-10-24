@@ -1,0 +1,41 @@
+<?php 
+$servername="localhost";
+$username="root";
+$pass="";
+$dbname="abh";
+$conn= new mysqli($servername,$username,$pass,$dbname);
+$id=$_GET['edit'];
+
+if(isset($_GET['submit']))
+{
+ $id=$_GET['id'];
+ $name=$_GET['name'];
+ $email=$_GET['email'];
+ $pass=$_GET['pass'];
+ $sql2="update ab set Name='$name' where Id='$id'";
+ mysqli_query($conn,$sql2);
+ header("location:ab.php");
+}
+$sql="select * from ab where id='$id'";
+$res=mysqli_query($conn,$sql);
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <title></title>
+</head>
+<body>
+  <form method="get">
+   <?php while($r= mysqli_fetch_assoc($res)){ ?>
+     Id: <input type="number" name="id" value="<?php echo $r["Id"] ; ?>" readonly><br>
+     Name: <input type="text" name="name" value="<?php echo $r["Name"] ; ?>"><br>
+     Email: <input type="text" name="email"value="<?php echo $r["Email"] ; ?>"><br>
+     Pass: <input type="text" name="pass"value="<?php echo $r["Pass"] ; ?>"><br>
+  <?php } ?>
+     <button type="submit" name="submit">Edit</button>
+    </form>
+</body>
+</html>
