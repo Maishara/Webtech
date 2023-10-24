@@ -1,0 +1,60 @@
+<?php 
+$servername="localhost";
+$username="root";
+$pass="";
+$dbname="maishara";
+$conn= new mysqli($servername,$username,$pass,$dbname);
+if(isset($_POST['del'])) {
+    $id = $_POST['del'];
+    $sql1 =("DELETE FROM salam WHERE id = $id");
+    mysqli_query($conn,$sql1);
+} else if(isset($_POST['add'])) {
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $pass = $_POST['pass'];
+    $repass = $_POST['frpass'];
+
+    if($pass === $repass) {
+        $sql2 = ("INSERT INTO salam (Id, Name, Email, Password) VALUES ($id, $name, $email, $pass)");
+        mysqli_query($conn,$sql2);
+        header("Location: Welcome.php");
+        exit();
+    } else {
+        echo "Passwords do not match. Please try again.";
+    }
+}
+
+
+
+
+
+
+$sql="select * from salam";
+$res= mysqli_query($conn,$sql);
+
+
+?>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration</title>
+</head>
+<body>
+    <h1>Registration form</h1>
+
+<form method="POST" action="Lab.php">
+ID:<input type="number" name="id"><br>
+Name:<input type="text" name="name"><br>
+Email:<input type="text" name="email"><br>
+Pass:<input type="password" name="pass"><br>
+ Retype Password <input type="password" name="frpass">
+ <button type="submit" name="add">Submit</button>
+</form>
+
+
+</body>
+</html>
